@@ -3553,25 +3553,68 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscor
 var Backbone = __webpack_require__(1);
 var Marionette = __webpack_require__(5);
 
+var ToDoModel = __webpack_require__(8);
+
 
 var ToDo = Marionette.LayoutView.extend({
   tagName: 'li',
-  template: __webpack_require__(8)
+  template: __webpack_require__(9)
 });
 
 
-var TodoList = Marionette.CollectionView.extend({
+var TodoList = Marionette.CompositeView.extend({
   el: '#app-hook',
-  tagName: 'ul',
+  template: __webpack_require__(10),
 
-  childView: ToDo
+  childView: ToDo,
+  childViewContainer: 'ul',
+
+  ui: {
+    assignee: '#id_assignee',
+    form: 'form',
+    text: '#id_text'
+  },
+
+  triggers: {
+    'submit @ui.form': 'add:todo:item'
+  },
+
+  collectionEvents: {
+    add: 'itemAdded'
+  },
+
+    modelEvents: {
+    change: 'render'
+  },
+
+
+  onAddTodoItem: function() {
+    this.model.set({
+      assignee: this.ui.assignee.val(),
+      text: this.ui.text.val()
+    });
+
+    if (this.model.isValid()) {
+      var items = this.model.pick('assignee', 'text');
+      this.collection.add(items);
+    }
+  },
+
+  itemAdded: function() {
+    this.model.set({
+      assignee: '',
+      text: ''
+    });
+
+  }
 });
 
 var todo = new TodoList({
   collection: new Backbone.Collection([
     {assignee: 'Scott', text: 'Write a book about Marionette'},
     {assignee: 'Andrew', text: 'Do some coding'}
-  ])
+  ]),
+  model: new ToDoModel()
 });
 
 todo.render();
@@ -18025,14 +18068,66 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// Backbone.Baby
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var Backbone = __webpack_require__(1);
+
+
+var ToDo = Backbone.Model.extend({
+  defaults: {
+    assignee: '',
+    text: ''
+  },
+
+  validate: function(attrs) {
+    var errors = {};
+    var hasError = false;
+    if (!attrs.assignee) {
+      errors.assignee = 'assignee must be set';
+      hasError = true;
+    }
+    if (!attrs.text) {
+      errors.text = 'text must be set';
+      hasError = true;
+    }
+
+    if (hasError) {
+      return errors;
+    }
+  }
+});
+
+
+module.exports = ToDo;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
 /* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
 __p+=''+
 ((__t=( text ))==null?'':_.escape(__t))+
-' &amp; '+
+' &mdash; '+
 ((__t=( assignee ))==null?'':_.escape(__t))+
 '';
+}
+return __p;
+};
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(_) {module.exports = function(obj){
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+with(obj||{}){
+__p+='<ul></ul>\n<form>\n  <label for="id_text">Todo Text</label>\n  <input type="text" name="text" id="id_text" value="'+
+((__t=( text ))==null?'':_.escape(__t))+
+'" />\n  <label for="id_assignee">Assign to</label>\n  <input type="text" name="assignee" id="id_assignee" value="'+
+((__t=( assignee ))==null?'':_.escape(__t))+
+'"/>\n\n  <button id="btn-add">Add Item</button>\n</form>';
 }
 return __p;
 };
