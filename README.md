@@ -7,8 +7,8 @@ This is a tutorial on Backbone Marionette that can be found at https://marionett
 **This project is to be executed from the terminal.**
 1. Clone the project into an appropriate folder (ex: **user/mySanbox_env/CayuseCandidateCodeChallenge/**): <br />git clone https://github.com/pdxkar/CayuseCandidateCodeChallenge.git
 
-From the project root, run the project with this command:
-node_modules/.bin/
+From the project root, run the project with this command:<br/>
+node_modules/.bin/webpack
 
 Launch the project in a browser:
 Either paste path to index.html in browser's address bar:
