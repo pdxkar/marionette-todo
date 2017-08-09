@@ -8,7 +8,6 @@ var ToDo = Marionette.LayoutView.extend({
   template: require('./templates/todoitem.html')
 });
 
-
 var TodoList = Marionette.CompositeView.extend({
   el: '#app-hook',
   template: require('./templates/todolist.html'),
@@ -22,6 +21,7 @@ var TodoList = Marionette.CompositeView.extend({
     text: '#id_text'
   },
 
+//is this not working?
   triggers: {  // 2
     'submit @ui.form': 'add:todo:item'
   },
@@ -30,9 +30,13 @@ var TodoList = Marionette.CompositeView.extend({
     add: 'itemAdded'
   },
 
+  //Added this in part 2.5 "We just need to wire up our view to handle this..."
+  modelEvents: {
+    change: 'render'
+  },
+
   onAddTodoItem: function() {  // 4
     this.model.set({
-    //this.collection.add({
       assignee: this.ui.assignee.val(),  // 5
       text: this.ui.text.val()
     });
@@ -40,12 +44,10 @@ var TodoList = Marionette.CompositeView.extend({
       if (this.model.isValid()) {
       var items = this.model.pick('assignee', 'text');
       this.collection.add(items);
+      //replacing the above line with the line below didn't work:
+      //this.model.add(items);
     }
   },
-
-  // itemAdded: function() {  // 6
-  //   this.ui.assignee.val('');
-  //   this.ui.text.val('');
 
     itemAdded: function() {
     this.model.set({
@@ -53,8 +55,10 @@ var TodoList = Marionette.CompositeView.extend({
       text: ''
     });
 
-    this.ui.assignee.val('');
-    this.ui.text.val('');
+//removed this in part 2.5 "We just need to wire up our view to handle this..."
+//duplicates are posted whether it's here or not
+    //this.ui.assignee.val('');
+   // this.ui.text.val('');
   }
 });
 

@@ -3582,22 +3582,23 @@ var TodoList = Marionette.CompositeView.extend({
     add: 'itemAdded'
   },
 
+  //Added this in part 2.5 "We just need to wire up our view to handle this..."
+  modelEvents: {
+    change: 'render'
+  },
+
   onAddTodoItem: function() {  // 4
     this.model.set({
-    //this.collection.add({
       assignee: this.ui.assignee.val(),  // 5
       text: this.ui.text.val()
     });
 
       if (this.model.isValid()) {
       var items = this.model.pick('assignee', 'text');
-      this.collection.add(items);
+      //this.collection.add(items);
+      this.model.add(items);
     }
   },
-
-  // itemAdded: function() {  // 6
-  //   this.ui.assignee.val('');
-  //   this.ui.text.val('');
 
     itemAdded: function() {
     this.model.set({
@@ -3605,8 +3606,10 @@ var TodoList = Marionette.CompositeView.extend({
       text: ''
     });
 
-    this.ui.assignee.val('');
-    this.ui.text.val('');
+//removed this in part 2.5 "We just need to wire up our view to handle this..."
+//duplicates are posted whether it's here or not
+    //this.ui.assignee.val('');
+   // this.ui.text.val('');
   }
 });
 
