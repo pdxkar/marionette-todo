@@ -13,8 +13,8 @@ node_modules/.bin/webpack
 
 3. Launch the project in a browser:
 Either paste path to index.html in browser's address bar:
-ex: file:///Users/katherine.ennis/mySandbox-env/BackboneTutorials/gitbooks_marionette/index.html
--or-
+ex: file:///Users/katherine.ennis/mySandbox-env/BackboneTutorials/gitbooks_marionette/index.html__
+-or-__
 Double click on the index.html file in Finder 
 
 ### Prerequisites
@@ -27,6 +27,6 @@ Double click on the index.html file in Finder
 * **Katherine Ennis**
 
 ## Acknowledgments
-The tutorial on which this project is based is maintained on Github and built using GitBook. Issues can be opened and pull requests can be edited and submitted.
-Tutorial: https://marionette.gitbooks.io/marionette-guides/content/en/getting_started/tutorial/firstview.html
+The tutorial on which this project is based is maintained on Github and built using GitBook. Issues can be opened and pull requests can be edited and submitted.<br />
+Tutorial: https://marionette.gitbooks.io/marionette-guides/content/en/getting_started/tutorial/firstview.html<br />
 Github: https://github.com/marionettejs/guides
