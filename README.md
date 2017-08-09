@@ -13,8 +13,8 @@ node_modules/.bin/webpack
 
 3. Launch the project in a browser:
 Either paste path to index.html in browser's address bar:
-ex: file:///Users/katherine.ennis/mySandbox-env/BackboneTutorials/gitbooks_marionette/index.html\s
--or-\s
+ex: file:///Users/katherine.ennis/mySandbox-env/BackboneTutorials/gitbooks_marionette/index.html\s\s
+-or-\s\s
 Double click on the index.html file in Finder
 
 ### Prerequisites
